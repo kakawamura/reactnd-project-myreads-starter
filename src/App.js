@@ -46,8 +46,19 @@ class BooksApp extends React.Component {
         if(res.error) {
           return
         }
+        const searchedBooks = res.map(r => {
+          const book = this.state.books.find(b => { 
+            return b.id === r.id 
+          })
+          if(book) {
+            return book
+          }
+
+          return r
+        })
+
         this.setState({
-          searchedBooks: res,
+          searchedBooks,
         })
       })
   }
