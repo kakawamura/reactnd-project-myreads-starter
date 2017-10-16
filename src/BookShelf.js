@@ -5,7 +5,7 @@ import './App.css'
 class BookShelf extends React.Component {
 
   render() {
-    const { title, books } = this.props
+    const { title, books, onChangeShelf } = this.props
     return (
       <div className="bookshelf">
         <h2 className="bookshelf-title">{title}</h2>
@@ -18,7 +18,9 @@ class BookShelf extends React.Component {
                     <div className="book-top">
                       <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url("${book.imageLinks.thumbnail}")` }}></div>
                       <div className="book-shelf-changer">
-                        <select>
+                        <select 
+                          defaultValue={book.shelf}
+                          onChange={(e) => onChangeShelf(e.target.value, book)}>
                           <option value="none" disabled>Move to...</option>
                           <option value="currentlyReading">Currently Reading</option>
                           <option value="wantToRead">Want to Read</option>
@@ -43,6 +45,7 @@ class BookShelf extends React.Component {
 BookShelf.protTypes = {
   title: PropTypes.string.isRequired,
   books: PropTypes.array.isRequired,
+  onChangeShelf: PropTypes.func.isRequired,
 }
 
 export default BookShelf
