@@ -23,18 +23,16 @@ class BooksApp extends React.Component {
   }
 
   onChangeShelf = (shelf, book) => {
-    book.shelf = shelf
-    BooksAPI
-      .update(book, shelf)
-      .then(res => {
-        this.setState((state) => {
-          let books = state.books.filter((b) => b.id !== book.id)
-          books = books.concat([book])  
-          return {
-            books,
-          }
+    if(book.shelf !== shelf) {
+      BooksAPI
+        .update(book, shelf)
+        .then(res => {
+          book.shelf = shelf
+          this.setState(state => ({
+            books: state.books.filter((b) => b.id !== book.id).concat([ book ])
+          }))
         })
-      })
+    }
   }
 
   onChangeSearchInput = (value) => {
